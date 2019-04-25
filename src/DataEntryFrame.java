@@ -272,7 +272,6 @@ public class DataEntryFrame extends JFrame
 			// TODO: display error message on fail, else display success message
 		});
 
-		// TODO: add import/export to panel and add to frame
 		importExportPanel.add(importButton);
 		importExportPanel.add(exportButton);
 		this.add(importExportPanel);
