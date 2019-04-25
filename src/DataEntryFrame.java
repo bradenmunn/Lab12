@@ -95,15 +95,17 @@ public class DataEntryFrame extends JFrame
 	 */
 	private void setVisuals(FormData data)
 	{
-		// TODO: set the text fields and the signature as corresponding to the fields in FormData.
+		// Set the text fields and the signature as corresponding to the fields in FormData.
 		firstName.setText(data.getFirstName());
 		middleInitial.setText(Character.toString(data.getMiddleInitial()));
 		lastName.setText(data.getLastName());
 		displayName.setText(data.getDisplayName());
-		SSN.setText(data.getSSN()); // TODO Is this okay?
+		SSN.setText(data.getSSN());
 		phone.setText(data.getPhone());
 		email.setText(data.getEmail());
 		address.setText(data.getAddress());
+		
+		spanel.setSignature(data.getSignature());
 	}
 
 	/**
@@ -131,7 +133,7 @@ public class DataEntryFrame extends JFrame
 		});
 		this.add(formSelect);
 
-		// TODO: add in all form-fillable components:
+		// Add in all form-fillable components:
 		JPanel formFill = new JPanel(new GridLayout(8, 2));
 		formFill.add(firstNameInfo);
 		formFill.add(firstName);
@@ -166,7 +168,9 @@ public class DataEntryFrame extends JFrame
 			@Override
 			public void mouseDragged(MouseEvent e)
 			{
-				// TODO: add a point to the panel on drag and repaint.
+				// Add a point to the panel on drag and repaint.
+				spanel.addPoint(e.getPoint());
+				spanel.repaint();
 			}
 		});
 		this.add(signatureInfo);
@@ -190,9 +194,14 @@ public class DataEntryFrame extends JFrame
 		JButton saveForm = new JButton("Save");
 		saveForm.addActionListener((e) -> {
 			int select = formSelect.getSelectedIndex();
+			
 
 			// TODO: use the JTextFields and the signature panel to set the values
 			// of the selected FormData object.
+			
+			boolean success = datalist.get(select).setValues(firstName.getText(), middleInitial.getText().charAt(0), lastName.getText(), 
+					displayName.getText(), SSN.getText(), phone.getText(), email.getText(), address.getText(), 
+					spanel.getSignature());
 
 			this.setVisuals(datalist.get(select));
 			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
@@ -200,23 +209,41 @@ public class DataEntryFrame extends JFrame
 			formSelect.setSelectedIndex(select);
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
+			if(!success)
+			{
+				// Error message
+				errorField.setText("Input info does not match require format.");
+			}
+			else
+			{
+				// Success message
+				errorField.setText("Form information successfully updated");
+			}
 		});
 
 		JButton resetForm = new JButton("Reset");
 		resetForm.addActionListener((e) -> {
 			int select = formSelect.getSelectedIndex();
-			// TODO: reset the values on the selected form data
+			datalist.get(select).setValues("fn", 'm', "ln", "dn", "111111111", "1234567890",
+					"test@ou.edu", "111 first st", new ArrayList<Point>());
 			this.setVisuals(datalist.get(select));
 		});
 
-		// TODO: add buttons to panel and add to frame
+		// Add buttons to panel and add to frame
+		formHandling.add(createForm);
+		formHandling.add(saveForm);
+		formHandling.add(resetForm);
+		this.add(formHandling);
 
 		// Add in the error message field:
 		this.errorField.setEditable(false);
 		// TODO: add error field to frame
+		this.add(errorField);
 
 		// Add in the import/export panel:
 		JButton importButton = new JButton("Import");
+		JPanel importExportPanel = new JPanel(new GridLayout(1,2));
+		
 
 		// TODO: Import from a file: you will import a list of FormData objects and should use this to replace
 		// the data in datalist.
@@ -246,6 +273,9 @@ public class DataEntryFrame extends JFrame
 		});
 
 		// TODO: add import/export to panel and add to frame
+		importExportPanel.add(importButton);
+		importExportPanel.add(exportButton);
+		this.add(importExportPanel);
 
 		// JFrame basics:
 		this.setTitle("Example Form Fillout");
