@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -5,6 +6,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -115,7 +117,7 @@ public class DataEntryFrame extends JFrame
 
 	public DataEntryFrame()
 	{
-		this.setLayout(new GridLayout(7, 1));
+		this.setLayout(new GridLayout(7,1));
 
 		// Add initial form:
 		datalist.add(new FormData());
@@ -134,7 +136,9 @@ public class DataEntryFrame extends JFrame
 		this.add(formSelect);
 
 		// Add in all form-fillable components:
-		JPanel formFill = new JPanel(new GridLayout(8, 2));
+		GridLayout layout = new GridLayout(8,2);
+		JPanel formFill = new JPanel(layout);
+		
 		formFill.add(firstNameInfo);
 		formFill.add(firstName);
 		formFill.add(middleInitialInfo);
