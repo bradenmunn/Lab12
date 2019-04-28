@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.Box;
@@ -204,10 +205,10 @@ public class DataEntryFrame extends JFrame
 			this.setVisuals(datalist.get(select));
 		});
 
+		
 		JButton saveForm = new JButton("Save");
 		saveForm.addActionListener((e) -> {
 			int select = formSelect.getSelectedIndex();
-			
 
 			// TODO: use the JTextFields and the signature panel to set the values
 			// of the selected FormData object.
@@ -218,8 +219,10 @@ public class DataEntryFrame extends JFrame
 
 			this.setVisuals(datalist.get(select));
 			formSelect.addItem(datalist.get(select).getDisplayName());
-			//DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
-			//formSelect.setModel(newComboBoxModel);
+			
+			sortList(); // Sorts datalist
+			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
+			formSelect.setModel(newComboBoxModel);
 			formSelect.setSelectedIndex(select);
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
@@ -303,8 +306,8 @@ public class DataEntryFrame extends JFrame
 			
         	
             int select = 0;
-			//DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
-			//formSelect.setModel(newComboBoxModel);
+			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
+			formSelect.setModel(newComboBoxModel);
 			formSelect.setSelectedIndex(select);
 			this.setVisuals(datalist.get(select));
 			
@@ -349,6 +352,27 @@ public class DataEntryFrame extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 900);
 		this.setVisible(true);
+	}
+	
+	public void sortList()
+	{
+		for(int i = 0; i < datalist.size(); ++i)
+		{
+			String baseName = datalist.get(i).getDisplayName();
+			
+			for(int j = i; j< datalist.size(); ++j)
+			{
+				String testName = datalist.get(j).getDisplayName();
+				
+				if(baseName.compareTo(testName) > 0)
+				{
+					FormData temp = datalist.get(j);
+					datalist.set(j, datalist.get(i));
+					datalist.set(i, temp);
+				}
+					
+			}
+		}
 	}
 
 	public static void main(String[] args)
