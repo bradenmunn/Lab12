@@ -4,6 +4,12 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,6 +123,7 @@ public class DataEntryFrame extends JFrame
 	 */
 	private JTextField errorField = new JTextField("No Errors");
 
+	@SuppressWarnings("unchecked")
 	public DataEntryFrame()
 	{
 		this.setLayout(new GridLayout(7,1));
@@ -263,7 +270,7 @@ public class DataEntryFrame extends JFrame
 			// TODO: display error message on fail, else display success message
 
 			JFileChooser fc = new JFileChooser();
-			fc.setCurrentDirectory(new File("."));
+			fc.setCurrentDirectory(new File("./Forms"));
 			fc.setDialogTitle("Choose a file");
 			
 			if(fc.showOpenDialog(importButton) == JFileChooser.APPROVE_OPTION)
@@ -271,22 +278,59 @@ public class DataEntryFrame extends JFrame
 				//
 			}
 			
+			File file = fc.getSelectedFile();
 			
-        	// Use this code snippet to reset visuals after importing:
-			/*
+			try {
+				ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
+				datalist = (ArrayList<FormData>) is.readObject();
+				is.close();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+        	
             int select = 0;
 			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
 			formSelect.setModel(newComboBoxModel);
 			formSelect.setSelectedIndex(select);
 			this.setVisuals(datalist.get(select));
-			*/
+			
 		});
 
 		exportButton.addActionListener((e) -> {
-
+			
 			// TODO: Choose a file (hint, use JFileChooser):
 			// TODO: export datalist from a file (hint, use file.getAbsolutePath()):
 			// TODO: display error message on fail, else display success message
+			JFileChooser fc = new JFileChooser();
+			fc.setCurrentDirectory(new File("./Forms"));
+			
+			if(fc.showOpenDialog(exportButton) == JFileChooser.APPROVE_OPTION)
+			{
+				//
+			}
+			
+			File file = fc.getSelectedFile();
+			
+			try {
+				ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(file));
+				os.writeObject(datalist);
+				os.close();
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			
 		});
 
 		importExportPanel.add(importButton);
