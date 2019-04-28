@@ -3,6 +3,7 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -246,6 +248,7 @@ public class DataEntryFrame extends JFrame
 
 		// Add in the import/export panel:
 		JButton importButton = new JButton("Import");
+		JButton exportButton = new JButton("Export");
 		JPanel importExportPanel = new JPanel(new GridLayout(1,2));
 		
 
@@ -259,6 +262,16 @@ public class DataEntryFrame extends JFrame
 			//		 list of formdata.
 			// TODO: display error message on fail, else display success message
 
+			JFileChooser fc = new JFileChooser();
+			fc.setCurrentDirectory(new File("."));
+			fc.setDialogTitle("Choose a file");
+			
+			if(fc.showOpenDialog(importButton) == JFileChooser.APPROVE_OPTION)
+			{
+				//
+			}
+			
+			
         	// Use this code snippet to reset visuals after importing:
 			/*
             int select = 0;
@@ -268,7 +281,7 @@ public class DataEntryFrame extends JFrame
 			this.setVisuals(datalist.get(select));
 			*/
 		});
-		JButton exportButton = new JButton("Export");
+
 		exportButton.addActionListener((e) -> {
 
 			// TODO: Choose a file (hint, use JFileChooser):
@@ -283,7 +296,7 @@ public class DataEntryFrame extends JFrame
 		// JFrame basics:
 		this.setTitle("Example Form Fillout");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(500, 700);
+		this.setSize(600, 900);
 		this.setVisible(true);
 	}
 
