@@ -24,7 +24,7 @@ public class FormData implements Serializable
 	private char middleInitial;
 	private String lastName;
 	private String displayName;
-	private String SSN;  // TODO: ensure that SSN does not serialize!
+	private transient String SSN;  // TODO: ensure that SSN does not serialize!
 
 	/**
 	 * Contact information:

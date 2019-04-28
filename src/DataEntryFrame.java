@@ -217,8 +217,9 @@ public class DataEntryFrame extends JFrame
 					spanel.getSignature());
 
 			this.setVisuals(datalist.get(select));
-			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
-			formSelect.setModel(newComboBoxModel);
+			formSelect.addItem(datalist.get(select).getDisplayName());
+			//DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
+			//formSelect.setModel(newComboBoxModel);
 			formSelect.setSelectedIndex(select);
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
@@ -283,6 +284,12 @@ public class DataEntryFrame extends JFrame
 			try {
 				ObjectInputStream is = new ObjectInputStream(new FileInputStream(file));
 				datalist = (ArrayList<FormData>) is.readObject();
+				
+				for(int i = 0; i < datalist.size(); ++i)
+				{
+					formSelect.addItem(datalist.get(i).getDisplayName());
+				}
+				
 				is.close();
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
@@ -296,8 +303,8 @@ public class DataEntryFrame extends JFrame
 			
         	
             int select = 0;
-			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
-			formSelect.setModel(newComboBoxModel);
+			//DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
+			//formSelect.setModel(newComboBoxModel);
 			formSelect.setSelectedIndex(select);
 			this.setVisuals(datalist.get(select));
 			
