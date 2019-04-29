@@ -209,7 +209,7 @@ public class DataEntryFrame extends JFrame
 		JButton saveForm = new JButton("Save");
 		saveForm.addActionListener((e) -> {
 			int select = formSelect.getSelectedIndex();
-
+			String selected = displayName.getText();
 			// TODO: use the JTextFields and the signature panel to set the values
 			// of the selected FormData object.
 			
@@ -220,10 +220,11 @@ public class DataEntryFrame extends JFrame
 			this.setVisuals(datalist.get(select));
 			formSelect.addItem(datalist.get(select).getDisplayName());
 			
+			
 			sortList(); // Sorts datalist
 			DefaultComboBoxModel<String> newComboBoxModel = getComboBoxModel(datalist);
 			formSelect.setModel(newComboBoxModel);
-			formSelect.setSelectedIndex(select);
+			formSelect.setSelectedItem(selected);
 
 			// TODO: display an error message if setting the values failed. Else, display a success message.w
 			if(!success)
@@ -262,16 +263,7 @@ public class DataEntryFrame extends JFrame
 		JButton exportButton = new JButton("Export");
 		JPanel importExportPanel = new JPanel(new GridLayout(1,2));
 		
-
-		// TODO: Import from a file: you will import a list of FormData objects and should use this to replace
-		// the data in datalist.
 		importButton.addActionListener((e) -> {
-
-			// TODO: Choose a file (hint, use JFileChooser):
-			// TODO: extract object from a file (hint, use file.getAbsolutePath()):
-			//		 You will use the file to replace the datalist object. I.e. you will be loading in a new
-			//		 list of formdata.
-			// TODO: display error message on fail, else display success message
 
 			JFileChooser fc = new JFileChooser();
 			fc.setCurrentDirectory(new File("./Forms"));
@@ -297,10 +289,8 @@ public class DataEntryFrame extends JFrame
 			} catch (FileNotFoundException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (ClassNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -348,12 +338,15 @@ public class DataEntryFrame extends JFrame
 		this.add(importExportPanel);
 
 		// JFrame basics:
-		this.setTitle("Example Form Fillout");
+		this.setTitle("Form Fillout");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setSize(600, 900);
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Sorts the datalist array by comparing displayName of each FormData object
+	 */
 	public void sortList()
 	{
 		for(int i = 0; i < datalist.size(); ++i)
