@@ -124,6 +124,10 @@ public class DataEntryFrame extends JFrame
 	 */
 	private JTextField errorField = new JTextField("No Errors");
 
+	/**
+	 * Creates a GUI sample form that allows input of user data and signature, and has functionality
+	 * of saving multiple forms and exporting them to a file that can be imported at any time.
+	 */
 	@SuppressWarnings("unchecked")
 	public DataEntryFrame()
 	{
