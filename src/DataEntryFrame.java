@@ -244,6 +244,9 @@ public class DataEntryFrame extends JFrame
 			}
 		});
 
+		/**
+		 * Functionality to reset all the fields to their default values.
+		 */
 		JButton resetForm = new JButton("Reset");
 		resetForm.addActionListener((e) -> {
 			int select = formSelect.getSelectedIndex();
