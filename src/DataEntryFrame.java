@@ -172,9 +172,6 @@ public class DataEntryFrame extends JFrame
 		formFill.add(address);
 		
 
-
-		
-		// TODO: add to panel...
 		this.add(formFill);
 
 		// Add in the signature panel:
@@ -214,8 +211,6 @@ public class DataEntryFrame extends JFrame
 		saveForm.addActionListener((e) -> {
 			int select = formSelect.getSelectedIndex();
 			String selected = displayName.getText();
-			// TODO: use the JTextFields and the signature panel to set the values
-			// of the selected FormData object.
 			
 			boolean success = datalist.get(select).setValues(firstName.getText(), middleInitial.getText().charAt(0), lastName.getText(), 
 					displayName.getText(), SSN.getText(), phone.getText(), email.getText(), address.getText(), 
@@ -230,7 +225,6 @@ public class DataEntryFrame extends JFrame
 			formSelect.setModel(newComboBoxModel);
 			formSelect.setSelectedItem(selected);
 
-			// TODO: display an error message if setting the values failed. Else, display a success message.w
 			if(!success)
 			{
 				// Error message
@@ -259,7 +253,7 @@ public class DataEntryFrame extends JFrame
 
 		// Add in the error message field:
 		this.errorField.setEditable(false);
-		// TODO: add error field to frame
+		// Add error field to frame
 		this.add(errorField);
 
 		// Add in the import/export panel:
@@ -309,9 +303,6 @@ public class DataEntryFrame extends JFrame
 
 		exportButton.addActionListener((e) -> {
 			
-			// TODO: Choose a file (hint, use JFileChooser):
-			// TODO: export datalist from a file (hint, use file.getAbsolutePath()):
-			// TODO: display error message on fail, else display success message
 			JFileChooser fc = new JFileChooser();
 			fc.setCurrentDirectory(new File("./Forms"));
 			
@@ -327,10 +318,8 @@ public class DataEntryFrame extends JFrame
 				os.writeObject(datalist);
 				os.close();
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
