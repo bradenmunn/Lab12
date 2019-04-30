@@ -194,6 +194,10 @@ public class DataEntryFrame extends JFrame
 		// Add in the form create, save, and reset panel:
 		JPanel formHandling = new JPanel(new GridLayout(1, 3));
 		JButton createForm = new JButton("New Form");
+		
+		/**
+		 * Functionality to create a new form, resets all the fields to default values.
+		 */
 		createForm.addActionListener((e) -> {
 			FormData newData = new FormData();
 			newData.setValues("fn", 'm', "ln", "dn", "111111111", "1234567890",
@@ -207,6 +211,9 @@ public class DataEntryFrame extends JFrame
 		});
 
 		
+		/**
+		 * Functionality to save all the newly inputed data to the form.
+		 */
 		JButton saveForm = new JButton("Save");
 		saveForm.addActionListener((e) -> {
 			int select = formSelect.getSelectedIndex();
@@ -261,6 +268,10 @@ public class DataEntryFrame extends JFrame
 		JButton exportButton = new JButton("Export");
 		JPanel importExportPanel = new JPanel(new GridLayout(1,2));
 		
+		/**
+		 * Functionality for import button, populates the program with pre-made FormData objects
+		 * read in from a file
+		 */
 		importButton.addActionListener((e) -> {
 
 			JFileChooser fc = new JFileChooser();
@@ -301,6 +312,9 @@ public class DataEntryFrame extends JFrame
 			
 		});
 
+		/**
+		 * Functionality for export button, saves all FormData objects that have been created to a file
+		 */
 		exportButton.addActionListener((e) -> {
 			
 			JFileChooser fc = new JFileChooser();
